@@ -6,7 +6,7 @@ package com.frantisekpost.lib.valid8.core;
  * @author Frantisek Post
  *
  */
-public interface Validator {
+public interface Validator<T> {
 
 	/**
 	 * @return {@code true} if value is valid, or {@code false} if invalid
@@ -22,5 +22,7 @@ public interface Validator {
 	 * @return {@code true} if validation happened, or {@code false} if validation didn't happen.
 	 */
 	boolean validate();
+	
+	void setLogic(Logic<T> logic);
 	
 }
