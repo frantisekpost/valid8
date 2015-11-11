@@ -19,6 +19,8 @@ public interface Trigger<T extends JComponent> {
 	 * @param validator
 	 * @param component
 	 */
-	void register(Validator validator, T component);
+	void register(Validator<?> validator, T component);
+	
+	void unregister(Validator<?> validator, T component);
 	
 }

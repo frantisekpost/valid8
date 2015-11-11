@@ -9,9 +9,9 @@ package com.frantisekpost.lib.valid8.core;
 public interface Validator<T> {
 
 	/**
-	 * @return {@code true} if value is valid, or {@code false} if invalid
+	 * @return {@code true} if value is valid, or {@code false} if invalid, {@code null} if was not validated yet
 	 */
-	boolean isValid();
+	Boolean isValid();
 	
 	/**
 	 * @return text representation of invalid state
