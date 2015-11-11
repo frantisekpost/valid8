@@ -50,10 +50,7 @@ public class TextFieldTrigger implements Trigger<JTextField> {
 	}
 	
 	private void changed() {
-		boolean validated = validator.validate();
-		if (validated) {
-			//TODO do some reporting
-		}
+		validator.validate();
 	}
 
 }
