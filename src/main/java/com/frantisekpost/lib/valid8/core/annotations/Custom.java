@@ -6,12 +6,12 @@ import com.frantisekpost.lib.valid8.internal.Trigger;
 
 public @interface Custom {
 
-	Class<? extends Logic> logicClass();
+	Class<? extends Logic<?>> logicClass();
 
-	Class<? extends Data> dataClass();
+	Class<? extends Data<?, ?>> dataClass();
 
 	String message() default "";
 
-	Class<? extends Trigger> trigger();
+	Class<? extends Trigger<?>> trigger();
 
 }
