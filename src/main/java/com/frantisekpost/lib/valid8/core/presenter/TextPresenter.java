@@ -7,28 +7,32 @@ import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.text.JTextComponent;
 
+import com.frantisekpost.lib.valid8.core.Validator;
+import com.frantisekpost.lib.valid8.internal.Result;
+
 public class TextPresenter extends AbstractPresenter {
 
 	private ComponentWrapper wrapper;
 	private String lastText;
+	private Boolean lastResult;
 
 	public TextPresenter(JComponent component) {
 		wrapper = createWrapper(component);
 	}
 
 	@Override
-	void saveValidState() {
+	void saveValidState(Validator<?> validator) {
 		lastText = wrapper.getText();
 	}
 
 	@Override
-	void loadValidState() {
+	void loadValidState(Validator<?> validator) {
 		wrapper.setText(lastText);
 	}
 
 	@Override
-	void presentInvalidState(String message) {
-		wrapper.setText(message);
+	void presentInvalidState(Result result) {
+		wrapper.setText(result.getValidator().getMessage());
 	}
 
 	private ComponentWrapper createWrapper(JComponent component) {
@@ -110,6 +114,16 @@ public class TextPresenter extends AbstractPresenter {
 
 		String getText();
 
+	}
+
+	@Override
+	Boolean getLastResult(Validator<?> validator) {
+		return lastResult;
+	}
+
+	@Override
+	void saveLastResult(Result result) {
+		lastResult = result.get();
 	}
 
 }

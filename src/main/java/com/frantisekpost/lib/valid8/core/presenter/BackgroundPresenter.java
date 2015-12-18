@@ -1,34 +1,45 @@
 package com.frantisekpost.lib.valid8.core.presenter;
 
 import java.awt.Color;
-import java.util.Objects;
 
 import javax.swing.JComponent;
 
-public class BackgroundPresenter extends AbstractPresenter {
+import com.frantisekpost.lib.valid8.core.Validator;
+import com.frantisekpost.lib.valid8.internal.Result;
 
-	private JComponent component;
-	private Color lastBackground;
+public class BackgroundPresenter extends AbstractComponentPresenter {
+
+	public static final BackgroundPresenter SHARED_INSTANCE = new BackgroundPresenter();
 
 	private static final Color INVALID_COLOR = Color.RED;
 
+	private static final String ORIGINAL_VALUE_KEY = "valid8.background.original";
+
+	private BackgroundPresenter() {
+		super();
+	}
+
 	public BackgroundPresenter(JComponent component) {
-		this.component = component;
-		Objects.requireNonNull(component, "component can not be null");
+		super(component);
 	}
 
 	@Override
-	void saveValidState() {
-		lastBackground = component.getBackground();
+	void saveValidState(Validator<?> validator) {
+		JComponent component = getPresentingComponent(validator);
+		Color lastBackground = component.getBackground();
+		component.putClientProperty(ORIGINAL_VALUE_KEY, lastBackground);
 	}
 
 	@Override
-	void loadValidState() {
-		component.setBackground(lastBackground);
+	void loadValidState(Validator<?> validator) {
+		JComponent component = getPresentingComponent(validator);
+		Color originalBackground = (Color) component.getClientProperty(ORIGINAL_VALUE_KEY);
+		component.setBackground(originalBackground);
 	}
 
 	@Override
-	void presentInvalidState(String message) {
+	void presentInvalidState(Result result) {
+		JComponent component = getPresentingComponent(result.getValidator());
 		component.setBackground(INVALID_COLOR);
 	}
 
